@@ -3,27 +3,26 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UsersEntity } from './users/entity/users.entity';
+import { configService } from './config/config.service';
 import { UsersModule } from './users/users.module';
+import { AddressModule } from './address/address.module';
+import { ProductModule } from './product/product.module';
+import { CartController } from './cart/cart.controller';
+import { CartService } from './cart/cart.service';
+import { CartModule } from './cart/cart.module';
+import { CartItemModule } from './cart_item/cart_item.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      username: 'root',
-      password: 'chuong2532000',
-      database: 'men_world_store',
-      // entities: ['dist/**/*.entity{.ts,.js}'],
-      entities: [UsersEntity],
-      synchronize: true,
-      dropSchema: true,
-    }),
+    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     AuthModule,
     UsersModule,
+    AddressModule,
+    ProductModule,
+    CartModule,
+    CartItemModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, CartController],
+  providers: [AppService, CartService],
 })
 export class AppModule {}

@@ -5,6 +5,11 @@ export interface registrationStatus {
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import 'dotenv/config';
+import { AddressEntity } from 'src/address/entity/address.entity';
+import { CartEntity } from 'src/cart/entity/cart.entity';
+import { CartItemEntity } from 'src/cart_item/entity/cart_item.entity';
+import { ProductEntity } from 'src/product/entity/product.entity';
+import { UsersEntity } from 'src/users/entity/users.entity';
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
@@ -30,15 +35,30 @@ class ConfigService {
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       type: 'mysql',
-      host: this.getValue('POSTGRES_HOST'),
-      port: parseInt(this.getValue('POSTGRES_PORT')),
-      username: this.getValue('POSTGRES_USER'),
-      password: this.getValue('POSTGRES_PASSWORD'),
-      database: this.getValue('POSTGRES_DATABASE'),
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      host: this.getValue('MYSQL_HOST'),
+      port: parseInt(this.getValue('MYSQL_PORT')),
+      username: this.getValue('MYSQL_USER'),
+      password: this.getValue('MYSQL_PASSWORD'),
+      database: this.getValue('MYSQL_DATABASE'),
+      //   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      entities: [
+        UsersEntity,
+        AddressEntity,
+        ProductEntity,
+        CartEntity,
+        CartItemEntity,
+      ],
       migrationsTableName: 'migration',
       migrations: ['src/migration/*.ts'],
       synchronize: true,
     };
   }
 }
+const configService = new ConfigService(process.env).ensureValues([
+  'MYSQL_HOST',
+  'MYSQL_PORT',
+  'MYSQL_USER',
+  'MYSQL_PASSWORD',
+  'MYSQL_DATABASE',
+]);
+export { configService };

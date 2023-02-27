@@ -40,25 +40,28 @@ export class UsersService {
     }
     return toUserDto(user);
   }
+  async findByPayload({ email }: any): Promise<UserDto> {
+    return await this.findOne({ where: { email } });
+  }
 
   async create(userDto: CreateUserDto): Promise<UserDto> {
     const { first_name, last_name, password, email } = userDto;
-    // check if user is exist in the db
+    // check if user is exist in the db z
     const userExist = await this.userRepo.findOne({
       where: { email },
     });
     if (userExist) {
       throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
     }
-    // const newPasswordHased = await bcrypt.hash(password, 10);
-    const user: UsersEntity = await this.userRepo.create({
-      password,
+    const newPasswordHased = await bcrypt.hash(password, 10);
+    const user: UsersEntity = this.userRepo.create({
+      password: newPasswordHased,
       first_name,
       last_name,
       email,
     });
 
-    await this.userRepo.save(user);
-    return toUserDto(user);
+    const rs = await this.userRepo.save(user);
+    return toUserDto(rs);
   }
 }

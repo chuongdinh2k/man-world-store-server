@@ -61,7 +61,7 @@ export class UsersService {
       email,
     });
 
-    const rs = await this.userRepo.save(user);
-    return toUserDto(rs);
+    const savedUser = await this.userRepo.save(user);
+    return toUserDto(savedUser);
   }
 }

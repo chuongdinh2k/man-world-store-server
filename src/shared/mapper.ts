@@ -22,8 +22,8 @@ export const toProductDto = (data: ProductEntity): ProductDto => {
     price,
     description,
     image_url,
-    created_at,
-    updated_at,
+    // created_at,
+    // updated_at,
   } = data;
   const productDto: ProductDto = {
     id,
@@ -32,8 +32,8 @@ export const toProductDto = (data: ProductEntity): ProductDto => {
     description,
     price,
     image_url,
-    created_at,
-    updated_at,
+    // created_at,
+    // updated_at,
   };
   return productDto;
 };

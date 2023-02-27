@@ -19,9 +19,9 @@ export class ProductDto {
   @IsNotEmpty()
   image_url: string;
 
-  @IsNotEmpty()
-  created_at: Date;
+  // @IsNotEmpty()
+  // created_at: Date;
 
-  @IsNotEmpty()
-  updated_at: Date;
+  // @IsNotEmpty()
+  // updated_at: Date;
 }

@@ -21,6 +21,9 @@ export class UsersEntity {
   @Column()
   password: string;
 
+  @Column()
+  phone: string;
+
   @CreateDateColumn() createdOn?: Date;
   @CreateDateColumn() updatedOn?: Date;
 }

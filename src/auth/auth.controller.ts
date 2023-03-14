@@ -6,8 +6,6 @@ import {
   Req,
 } from '@nestjs/common';
 import { Body, Get, Post, UseGuards } from '@nestjs/common/decorators';
-import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
 import { RefreshTokenDto } from 'src/users/dto/refresh-token.dto';
 import { LoginUserDto } from 'src/users/dto/user-login.dto';
 import { CreateUserDto } from 'src/users/dto/user.create.dto';
@@ -38,7 +36,6 @@ export class AuthController {
 
   @Post('refreshToken')
   async refresh(@Body() refreshTokenDto: RefreshTokenDto): Promise<string> {
-    // const refreshTokenParam = req.cookies['refreshToken'];
     const { token } = refreshTokenDto;
     try {
       const refreshToken = await this.authService.refreshToken(token);
@@ -47,8 +44,9 @@ export class AuthController {
       throw new ForbiddenException(error.message);
     }
   }
-  @Get('whoami')
+
   @UseGuards(JwtAuthGuard)
+  @Get('me')
   public async testAuth(@Req() req: any): Promise<any> {
     return req.user;
   }

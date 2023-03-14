@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -23,6 +23,6 @@ import { CartItemModule } from './cart_item/cart_item.module';
     CartItemModule,
   ],
   controllers: [AppController, CartController],
-  providers: [AppService, CartService],
+  providers: [AppService, CartService, Logger],
 })
 export class AppModule {}

@@ -6,11 +6,12 @@ import { AuthService } from './auth.service';
 import { JwtPayload } from './interfaces/payload.interface';
 import 'dotenv/config';
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy,'jwt') {
   constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.JWT_SECRET,
+      ignoreExpiration: true,
     });
   }
 

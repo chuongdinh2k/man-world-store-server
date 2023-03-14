@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsEmail } from 'class-validator';
+import { IsPhoneNumber } from 'src/decorators';
 export class CreateUserDto {
   @IsNotEmpty()
   first_name: string;
@@ -12,4 +13,9 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+
+  @IsNotEmpty()
+  @IsPhoneNumber()
+  phone: string;
 }
